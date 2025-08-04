@@ -66,3 +66,14 @@ jobs:
       run: |
         kubectl delete deployment lugx-order-service-blue --ignore-not-found
         kubectl delete service lugx-order-service-blue --ignore-not-found
+
+    - name: Test DB Connection in Cluster
+      run: |
+        kubectl delete pod db-debug --ignore-not-found
+        kubectl run db-debug --image=alpine --restart=Never --command -- sleep 60 &
+        sleep 5
+        kubectl exec db-debug -- sh -c "
+          apk update &&
+          apk add postgresql-client &&
+          psql -h postgres -U postgres -d lugx-gaming -c 'SELECT 1;' || echo '❌ DB connection failed'
+        "
