@@ -17,3 +17,20 @@ spec:
         image: 476287788277.dkr.ecr.ap-south-1.amazonaws.com/lugx-order-service:latest
         ports:
         - containerPort: 3002
+        env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: lugx-gaming
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
