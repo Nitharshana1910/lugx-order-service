@@ -29,6 +29,12 @@ app.get('/orders', async (req, res) => {
   }
 });
 
-app.listen(3002, () => {
+app.listen(3002, async () => {
+  try {
+    await pool.query('SELECT 1');
+    console.log('✅ Connected to DB');
+  } catch (err) {
+    console.error('❌ Failed to connect to DB:', err.message);
+  }
   console.log('🛒 Order Service running on port 3002');
 });
