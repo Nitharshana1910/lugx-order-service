@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lugx-order-service-green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lugx-order-service-green
+  template:
+    metadata:
+      labels:
+        app: lugx-order-service-green
+    spec:
+      containers:
+      - name: lugx-order-service
+        image: 476287788277.dkr.ecr.ap-south-1.amazonaws.com/lugx-order-service:latest
+        ports:
+        - containerPort: 3002
